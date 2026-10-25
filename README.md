@@ -1,6 +1,6 @@
 # MGZ — Wear your own pace
 
-MGZ is a responsive fashion storefront concept for vintage-inspired everyday essentials. It brings collections, product details, a shopping bag, and a simple demo checkout together in a calm, editorial shopping experience.
+MGZ is a responsive e-commerce storefront concept for vintage-inspired everyday essentials. It brings collections, product details, a shopping bag, and a simple demo checkout together in a calm, editorial shopping experience.
 
 ## Features
 
