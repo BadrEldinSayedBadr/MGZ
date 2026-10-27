@@ -179,7 +179,11 @@ function Header({ headerRef, scrolled, home, menuOpen, bagCount, onMenu, onSearc
         <span />
       </button>
       <button className="brand-mark" onClick={onHome} aria-label="MGZ home">
-        <img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" />
+        <span
+          className="brand-mark-image"
+          style={{ '--logo-mask': `url("${import.meta.env.BASE_URL}mgz-logo.png")` }}
+          aria-hidden="true"
+        />
       </button>
       <div className="header-actions">
         <button className="icon-button search-trigger" onClick={onSearch} aria-label="Search products">
@@ -589,13 +593,14 @@ function App() {
         const glassHeight = heroHeight + (headerHeight - heroHeight) * progress;
         const glassWidth = isScrolled ? 75 : 100;
         const navbarProgress = Math.min(1, Math.max(0, (progress - 0.94) / 0.06));
+        const logoColor = [245, 242, 235].map((start, index) => Math.round(start + ([74, 83, 66][index] - start) * navbarProgress));
 
         header.style.setProperty('--glass-height', `${glassHeight}px`);
         header.style.setProperty('--glass-width', `${glassWidth}%`);
         header.style.setProperty('--glass-opacity', `${navbarProgress}`);
         header.style.setProperty('--nav-content-opacity', `${navbarProgress}`);
         header.style.setProperty('--nav-content-events', navbarProgress > 0 ? 'auto' : 'none');
-        header.style.setProperty('--brand-color', navbarProgress === 1 ? 'var(--green)' : '#f5f2eb');
+        header.style.setProperty('--brand-color', `rgb(${logoColor.join(', ')})`);
         header.style.setProperty('--glass-radius', `${isScrolled ? 30 : 0}px`);
         header.style.setProperty('--glass-edge-alpha', '0');
         header.style.setProperty('--logo-top', `${logoTop}px`);

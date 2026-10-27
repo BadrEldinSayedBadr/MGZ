@@ -33,11 +33,9 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px s
 .site-header.not-home { opacity: 0; transform: translate(-50%,-100%); }
 .site-header.not-home.is-visible { opacity: 1; transform: translate(-50%,0); }
 .brand-mark { position: fixed; z-index: 1; top: var(--logo-top, 50svh); left: 50%; transform: translate(-50%,-50%) scale(var(--logo-scale, 1)); transform-origin: center; opacity: var(--logo-opacity, 1); padding: 0; border: 0; background: none; font-size: 12rem; cursor: pointer; pointer-events: var(--logo-pointer-events, auto); will-change: top, transform, opacity; }
-.brand-mark img { display: block; width: 2em; height: auto; }
-.site-header.is-visible:not(.home-mode) .brand-mark { color: var(--ink); text-shadow: none; }
-.site-header.home-mode.is-visible .brand-mark { text-shadow: none; font-weight: 700; letter-spacing: 0; }
+.brand-mark-image { display: block; width: 2em; aspect-ratio: 1053 / 304; background-color: var(--brand-color, #f5f2eb); -webkit-mask-image: var(--logo-mask); -webkit-mask-position: center; -webkit-mask-repeat: no-repeat; -webkit-mask-size: 100% 100%; mask-image: var(--logo-mask); mask-position: center; mask-repeat: no-repeat; mask-size: 100% 100%; }
 .site-header.not-home .brand-mark { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 1; color: var(--ink); text-shadow: none; font-size: 29px; }
-.site-header.not-home .brand-mark img { filter: brightness(0); }
+.site-header.not-home .brand-mark-image { background-color: var(--ink); }
 .icon-button { display: grid; place-items: center; border: 0; padding: 8px; background: none; cursor: pointer; }
 .menu-trigger { position: absolute; z-index: 2; top: 50%; left: 5.2%; display: flex; width: 36px; height: 36px; padding: 9px 6px; flex-direction: column; justify-content: center; gap: 6px; border: 0; background: transparent; color: inherit; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(-50%); transition: opacity .35s ease; }
 .menu-trigger span { width: 24px; height: 1px; display: block; background: currentColor; transition: transform .3s ease, width .3s ease; }
