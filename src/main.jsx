@@ -178,7 +178,9 @@ function Header({ headerRef, scrolled, home, menuOpen, bagCount, onMenu, onSearc
         <span />
         <span />
       </button>
-      <button className="brand-mark" onClick={onHome} aria-label="MGZ home"><span className="brand-initial">M</span>GZ</button>
+      <button className="brand-mark" onClick={onHome} aria-label="MGZ home">
+        <img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" />
+      </button>
       <div className="header-actions">
         <button className="icon-button search-trigger" onClick={onSearch} aria-label="Search products">
           <SearchIcon />
@@ -646,7 +648,7 @@ function App() {
       {page.type === 'about' && <AboutPage onHome={goBack} onShop={() => showCategory('All')} />}
       {page.type === 'checkout' && <CheckoutPage items={bag} onBack={goBack} onComplete={completeOrder} />}
       <footer className="site-footer">
-        <div className="footer-brand"><button className="footer-logo" onClick={goHome}>MGZ</button><span>Comfort, with a point of view.</span></div>
+        <div className="footer-brand"><button className="footer-logo" onClick={goHome} aria-label="MGZ home"><img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" /></button><span>Comfort, with a point of view.</span></div>
         <nav className="footer-nav" aria-label="Footer navigation">
           <span className="footer-heading">EXPLORE</span>
           <button onClick={goHome}>Home</button>
