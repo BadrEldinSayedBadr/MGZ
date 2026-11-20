@@ -5,7 +5,7 @@ MGZ is a responsive e-commerce storefront concept for vintage-inspired everyday 
 ## Features
 
 - Responsive home page with an animated runway hero and collection cards.
-- Sweatshirts, sweatpants, and denim pants collections.
+- Sweatshirts and sweatpants collections.
 - Product pages with color selection, multiple product images, size selection, and related products.
 - Search, collection sorting, and a shopping bag with editable items.
 - About page, newsletter signup interaction, and a demo checkout flow.

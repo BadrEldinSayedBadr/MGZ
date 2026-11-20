@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Snowfall from 'react-snowfall';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
@@ -63,46 +64,6 @@ const products = [
     image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85',
     tag: 'The set',
   },
-  {
-    id: 7,
-    name: 'The Everyday Straight Jean',
-    category: 'Denim Pants',
-    price: 88,
-    color: 'Classic blue',
-    colors: [{ name: 'Classic blue', value: '#536b83' }, { name: 'Washed black', value: '#343631' }],
-    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1000&q=85',
-    tag: 'Bestseller',
-  },
-  {
-    id: 8,
-    name: 'Relaxed Vintage Jean',
-    category: 'Denim Pants',
-    price: 92,
-    color: 'Light wash',
-    colors: [{ name: 'Light wash', value: '#9aabb8' }, { name: 'Classic blue', value: '#536b83' }],
-    image: 'https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&w=1000&q=85',
-    tag: 'New in',
-  },
-  {
-    id: 9,
-    name: 'The Wide-Leg Jean',
-    category: 'Denim Pants',
-    price: 96,
-    color: 'Indigo',
-    colors: [{ name: 'Indigo', value: '#394b68' }, { name: 'Light wash', value: '#9aabb8' }],
-    image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=1000&q=85',
-    tag: '',
-  },
-  {
-    id: 10,
-    name: 'The Weekend Denim',
-    category: 'Denim Pants',
-    price: 90,
-    color: 'Washed blue',
-    colors: [{ name: 'Washed blue', value: '#71869a' }, { name: 'Indigo', value: '#394b68' }],
-    image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=1000&q=85',
-    tag: '',
-  },
 ];
 
 const productGalleryImages = {
@@ -122,20 +83,11 @@ const productGalleryImages = {
     'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1000&q=85',
     'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=1000&q=85&sat=-45',
   ],
-  'Denim Pants': [
-    'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1582418702059-97ebafb35d09?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=1000&q=85',
-  ],
 };
 
 const colorImageIndexes = {
   Sweatshirts: { Moss: 0, Oatmeal: 3, 'Washed black': 4 },
   Sweatpants: { Moss: 0, 'Vintage grey': 1, Oatmeal: 2 },
-  'Denim Pants': { 'Classic blue': 0, 'Light wash': 1, Indigo: 2, 'Washed blue': 3, 'Washed black': 4 },
 };
 
 function getProductGallery(product, color) {
@@ -171,59 +123,173 @@ function BagIcon() {
   );
 }
 
-function Header({ headerRef, scrolled, home, menuOpen, bagCount, onMenu, onSearch, onBag, onHome }) {
+// function Header({ headerRef, scrolled, home, menuOpen, bagCount, onMenu, onSearch, onBag, onHome }) {
+//   return (
+//     <header ref={headerRef} className={`site-header ${home ? 'home-mode' : 'not-home'}  ${menuOpen ? 'menu-open' : ''}`}>
+//       <button className={`menu-trigger ${menuOpen ? 'is-open' : ''}`} onClick={onMenu} aria-label={menuOpen ? 'Close collections menu' : 'Open collections menu'} aria-expanded={menuOpen} aria-controls="category-drawer">
+//         <span />
+//         <span />
+//       </button>
+//       <button className="brand-mark" onClick={onHome} aria-label="MGZ home">
+//         <span
+//           className="brand-mark-image"
+//           style={{ '--logo-mask': `url("${import.meta.env.BASE_URL}mgz-logo.png")` }}
+//           aria-hidden="true"
+//         />
+//       </button>
+//       <div className="header-actions">
+//         <button className="icon-button search-trigger" onClick={onSearch} aria-label="Search products">
+//           <SearchIcon />
+//         </button>
+//         <button className="icon-button bag-trigger" onClick={onBag} aria-label={`Open bag, ${bagCount} ${bagCount === 1 ? 'item' : 'items'}`}>
+//           <BagIcon />
+//           {bagCount > 0 && <span className="bag-count">{bagCount}</span>}
+//         </button>
+//       </div>
+//     </header>
+//   );
+// }
+
+
+
+
+function Header({ headerRef, home, menuOpen, bagCount, onMenu, onSearch, onBag, onHome, onShop, onAbout }) {
   return (
-    <header ref={headerRef} className={`site-header ${home ? 'home-mode' : 'not-home'} ${scrolled ? 'is-visible' : ''} ${menuOpen ? 'menu-open' : ''}`}>
-      <button className={`menu-trigger ${menuOpen ? 'is-open' : ''}`} onClick={onMenu} aria-label={menuOpen ? 'Close collections menu' : 'Open collections menu'} aria-expanded={menuOpen} aria-controls="category-drawer">
+    <header
+      ref={headerRef}
+      className={`site-header ${home ? 'home-mode' : 'not-home'} ${menuOpen ? 'menu-open' : ''}`}
+    >
+      <button
+        className={`menu-trigger ${menuOpen ? 'is-open' : ''}`}
+        onClick={onMenu}
+        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={menuOpen}
+        aria-controls="category-drawer"
+      >
         <span />
         <span />
       </button>
+
       <button className="brand-mark" onClick={onHome} aria-label="MGZ home">
         <span
           className="brand-mark-image"
-          style={{ '--logo-mask': `url("${import.meta.env.BASE_URL}mgz-logo.png")` }}
+          style={{
+            '--logo-mask': `url("${import.meta.env.BASE_URL}mgz-logo.png")`
+          }}
           aria-hidden="true"
         />
       </button>
-      <div className="header-actions">
-        <button className="icon-button search-trigger" onClick={onSearch} aria-label="Search products">
-          <SearchIcon />
-        </button>
-        <button className="icon-button bag-trigger" onClick={onBag} aria-label={`Open bag, ${bagCount} ${bagCount === 1 ? 'item' : 'items'}`}>
-          <BagIcon />
-          {bagCount > 0 && <span className="bag-count">{bagCount}</span>}
-        </button>
+
+      <div className="right">
+        <nav className="nav-center">
+          <button onClick={onShop}>SHOP</button>
+          <button onClick={onAbout}>OUR WORLD</button>
+        </nav>
+
+        <div className="nav-right">
+          <button className="nav-text-button" onClick={onSearch}>
+            SEARCH
+          </button>
+
+          <button className="nav-text-button" onClick={onBag}>
+            BAG ({bagCount})
+          </button>
+        </div>
       </div>
     </header>
   );
 }
 
-function CategoryDrawer({ onClose, onCategory }) {
+
+
+
+
+
+function CategoryDrawer({
+  onClose,
+  onCategory,
+  onShop,
+  onAbout,
+  onSearch,
+  onBag,
+  bagCount
+}) {
   useEffect(() => {
     function handleKey(event) {
       if (event.key === 'Escape') onClose();
     }
+
     window.addEventListener('keydown', handleKey);
+
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
   return (
-    <div className="menu-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-      <aside id="category-drawer" className="category-drawer" role="dialog" aria-modal="true" aria-label="Shop collections">
+    <div
+      className="menu-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <aside
+        id="category-drawer"
+        className="category-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Main navigation"
+      >
         <div className="drawer-heading">
-          <span className="eyebrow">FIND YOUR EVERYDAY</span>
-          <button className="close-button drawer-close" onClick={onClose} aria-label="Close collections menu">×</button>
+          <span className="eyebrow">MGZ / MENU</span>
+
+          <button
+            className="close-button drawer-close"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            ×
+          </button>
         </div>
-        <nav className="drawer-links" aria-label="Collections">
-          <button onClick={() => onCategory('Sweatshirts')}>Sweatshirts<span>01</span></button>
-          <button onClick={() => onCategory('Sweatpants')}>Sweatpants<span>02</span></button>
-          <button onClick={() => onCategory('Denim Pants')}>Denim Pants<span>03</span></button>
+
+        <nav className="drawer-links" aria-label="Main navigation">
+
+          <button onClick={onShop}>
+            SHOP <span>01</span>
+          </button>
+
+          <button onClick={onAbout}>
+            OUR WORLD <span>02</span>
+          </button>
+
+          <button onClick={onSearch}>
+            SEARCH <span>03</span>
+          </button>
+
+          <button onClick={onBag}>
+            BAG ({bagCount}) <span>04</span>
+          </button>
+
         </nav>
-        <span className="drawer-note">Comfort, with a point of view.</span>
+
+        <div className="drawer-collections">
+          <span className="eyebrow">COLLECTIONS</span>
+
+          <button onClick={() => onCategory('Sweatshirts')}>
+            Sweatshirts
+          </button>
+
+          <button onClick={() => onCategory('Sweatpants')}>
+            Sweatpants
+          </button>
+        </div>
+
+        <span className="drawer-note">
+          Comfort, with a point of view.
+        </span>
       </aside>
     </div>
   );
 }
+
 
 function BagDrawer({ items, onClose, onRemove, onCheckout }) {
   useEffect(() => {
@@ -269,8 +335,8 @@ function ProductCard({ product, onSelect }) {
     <button className="product-card" onClick={() => onSelect(product)} aria-label={`View ${product.name}`}>
       <span className="product-image-wrap">
         <img src={product.image} alt={product.name} loading="lazy" />
-        {product.tag && <span className="product-tag">{product.tag}</span>}
-        <span className="quick-view">View piece <ArrowIcon /></span>
+        {/* {product.tag && <span className="product-tag">{product.tag}</span>} */}
+        {/* <span className="quick-view">View piece <ArrowIcon /></span> */}
       </span>
       <span className="product-meta">
         <span><span className="product-name">{product.name}</span><span className="product-color">{product.color}</span></span>
@@ -292,38 +358,58 @@ function HomePage({ onCategory, onProduct }) {
   return (
     <main>
       <section className="hero" aria-label="MGZ — vintage everyday wear">
-        <img className="hero-image" src={`${import.meta.env.BASE_URL}mgz-runway.gif`} alt="Fashion model walking on a runway" fetchPriority="high" />
+        {/* <img className="hero-image" src={`${import.meta.env.BASE_URL}home.jpg`} alt="Fashion model walking on a runway" fetchPriority="high" />   */}
+
         <div className="hero-shade" />
+      </section>
+
+      <section className="interest-section">
+        <div className="cover">
+          <div className="cover-copy">
+
+            <p>There's always more than one way to see things. <br />
+
+
+              Born and based in Egypt, MGZ is an independent streetwear brand built on individuality, simplicity, and a different way of seeing the world. <br />
+              {/* What began as eyewear has evolved into a universe shaped by Japanese precision, 90s attitude, and architectural clarity. A world where design is discipline, and non conformity is instinct... */}
+              Between past and future. Between structure and instinct. <br />
+            </p>
+            <div className="interest-brand">
+              <img
+                className="interestLogo"
+                src={`${import.meta.env.BASE_URL}mgz-logo.png`}
+                alt="MGZ"
+              />
+              <span className="interest-title">— EGYPT</span>
+            </div>
+
+          </div>
+          <img className='interestImg' src={`${import.meta.env.BASE_URL}interest.png`} alt="" />
+
+        </div>
       </section>
 
       <section className="category-section" aria-label="Shop our collections">
         <div className="category-grid">
-          <button className="category-tile pants-tile" onClick={() => onCategory('Sweatpants')}>
-            <img src="https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=1500&q=85" alt="Relaxed sweatpants" loading="lazy" />
-            <img className="category-hover-image" src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=1500&q=85" alt="" loading="lazy" />
-            <span className="category-overlay" />
-            <span className="category-copy"><span className="category-number">01 — THE BOTTOM HALF</span><span className="category-title">Sweatpants</span><span className="category-link">Explore collection <ArrowIcon /></span></span>
-          </button>
           <button className="category-tile sweatshirt-tile" onClick={() => onCategory('Sweatshirts')}>
-            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1500&q=85" alt="A cozy vintage-inspired sweatshirt" loading="lazy" />
-            <img className="category-hover-image" src="https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1500&q=85" alt="" loading="lazy" />
+            <img src={`${import.meta.env.BASE_URL}sweatshirt.png`} alt="A cozy vintage-inspired sweatshirt" loading="lazy" />
+            <img className="category-hover-image" src={`${import.meta.env.BASE_URL}sweatshirt2.png`} alt="" loading="lazy" />
             <span className="category-overlay" />
-            <span className="category-copy"><span className="category-number">02 — THE TOP HALF</span><span className="category-title">Sweatshirts</span><span className="category-link">Explore collection <ArrowIcon /></span></span>
+            <span className="category-copy"><span className="category-title">The Sweatshirts</span><span className="category-link">Shop Now</span></span>
           </button>
-          <button className="category-tile denim-tile" onClick={() => onCategory('Denim Pants')}>
-            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1500&q=85" alt="Classic blue denim pants" loading="lazy" />
-            <img className="category-hover-image" src="https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&w=1500&q=85" alt="" loading="lazy" />
+          <button className="category-tile pants-tile" onClick={() => onCategory('Sweatpants')}>
+            <img src={`${import.meta.env.BASE_URL}sweatpants.png`} alt="Relaxed sweatpants" loading="lazy" />
+            <img className="category-hover-image" src={`${import.meta.env.BASE_URL}sweatpants2.png`} alt="" loading="lazy" />
             <span className="category-overlay" />
-            <span className="category-copy"><span className="category-number">03 — THE DENIM EDIT</span><span className="category-title">Denim Pants</span><span className="category-link">Explore collection <ArrowIcon /></span></span>
+            <span className="category-copy"><span className="category-title">The Sweatpants</span><span className="category-link">Shop Now</span></span>
           </button>
         </div>
       </section>
 
       <section className="manifesto" id="about">
-        <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=2400&q=85" alt="Vintage clothing in warm afternoon light" loading="lazy" />
+        <img src={`${import.meta.env.BASE_URL}manifesto.png`} alt="Vintage clothing in warm afternoon light" loading="lazy" />
         <div className="manifesto-overlay" />
-        <div className="manifesto-copy"><span className="eyebrow">A NOTE TO SELF</span><h2>Wear your<br /><em>own pace.</em></h2><p>Less rush. More real life.<br />The good stuff is already yours.</p><button className="light-link" onClick={() => onCategory('All')}>Find your everyday <ArrowIcon /></button></div>
-        <span className="manifesto-mark">MGZ / 001</span>
+        <div className="manifesto-copy"><span className="eyebrow">A DIFFERENT POINT OF VIEW</span><h2>Dress beyond<br /><em>the ordinary.</em></h2><p>Not made to follow trends.<br />Made to create your own.</p><button className="light-link" onClick={() => onCategory('All')}>Discover MGZ <ArrowIcon /></button></div>
       </section>
 
       <section className="newsletter">
@@ -567,6 +653,7 @@ function App() {
   const [bag, setBag] = useState([]);
   const [notice, setNotice] = useState('');
 
+
   useEffect(() => {
     let frame = 0;
     function updateScroll() {
@@ -588,12 +675,17 @@ function App() {
         const headerHeight = isMobile ? 50 : 58;
         const logoTop = startTop + (headerHeight / 2 - startTop) * progress;
         const logoBaseSize = parseFloat(getComputedStyle(header.querySelector('.brand-mark')).fontSize);
-        const navbarLogoSize = isMobile ? 25 : 29;
+        // const navbarLogoSize = isMobile ? 25 : 29;
+        const navbarLogoSize = isMobile ? 55 : 64;
         const logoScale = 1 - (1 - navbarLogoSize / logoBaseSize) * progress;
         const glassHeight = heroHeight + (headerHeight - heroHeight) * progress;
-        const glassWidth = isScrolled ? 75 : 100;
+        // const glassWidth = isScrolled ? 75 : 100;
+        const glassWidth = 100;
         const navbarProgress = Math.min(1, Math.max(0, (progress - 0.94) / 0.06));
-        const logoColor = [245, 242, 235].map((start, index) => Math.round(start + ([74, 83, 66][index] - start) * navbarProgress));
+        // const logoColor = [245, 242, 235].map((start, index) => Math.round(start + ([74, 83, 66][index] - start) * navbarProgress));
+        const logoColor = [245, 242, 235].map((start) =>
+          Math.round(start + (20 - start) * navbarProgress)
+        );
 
         header.style.setProperty('--glass-height', `${glassHeight}px`);
         header.style.setProperty('--glass-width', `${glassWidth}%`);
@@ -601,7 +693,12 @@ function App() {
         header.style.setProperty('--nav-content-opacity', `${navbarProgress}`);
         header.style.setProperty('--nav-content-events', navbarProgress > 0 ? 'auto' : 'none');
         header.style.setProperty('--brand-color', `rgb(${logoColor.join(', ')})`);
-        header.style.setProperty('--glass-radius', `${isScrolled ? 30 : 0}px`);
+        header.style.setProperty(
+          '--nav-text-color',
+          `rgb(${logoColor.join(', ')})`
+        );
+        // header.style.setProperty('--glass-radius', `${isScrolled ? 30 : 0}px`);
+        header.style.setProperty('--glass-radius', '0px');
         header.style.setProperty('--glass-edge-alpha', '0');
         header.style.setProperty('--logo-top', `${logoTop}px`);
         header.style.setProperty('--logo-scale', `${logoScale}`);
@@ -646,30 +743,68 @@ function App() {
 
   return (
     <>
-      <Header headerRef={headerRef} scrolled={scrolled} home={page.type === 'home'} menuOpen={menuOpen} bagCount={bag.length} onMenu={() => setMenuOpen((open) => !open)} onSearch={() => { setSearchOpen(true); setMenuOpen(false); setBagOpen(false); }} onBag={openBag} onHome={goHome} />
+
+      {/* <Snowfall
+        color="#ffffff"
+        snowflakeCount={100}
+        speed={[0.5, 2]}
+        radius={[1, 3]}
+        wind={[-0.5, 1]}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          pointerEvents: 'none',
+          zIndex: 9999,
+        }}
+      />  */}
+
+
+      <Header headerRef={headerRef} scrolled={scrolled} home={page.type === 'home'} menuOpen={menuOpen} bagCount={bag.length} onMenu={() => setMenuOpen((open) => !open)} onSearch={() => { setSearchOpen(true); setMenuOpen(false); setBagOpen(false); }} onBag={openBag} onHome={goHome} onShop={() => showCategory('All')}
+        onAbout={showAbout} />
       {page.type === 'home' && <HomePage onCategory={showCategory} onProduct={showProduct} />}
       {page.type === 'collection' && <CollectionPage category={page.category} onProduct={showProduct} onHome={goBack} />}
       {page.type === 'product' && <ProductPage key={page.product.id} product={page.product} onBack={goBack} onAdd={addToBag} onProduct={showProduct} />}
       {page.type === 'about' && <AboutPage onHome={goBack} onShop={() => showCategory('All')} />}
       {page.type === 'checkout' && <CheckoutPage items={bag} onBack={goBack} onComplete={completeOrder} />}
       <footer className="site-footer">
-        <div className="footer-brand"><button className="footer-logo" onClick={goHome} aria-label="MGZ home"><img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" /></button><span>Comfort, with a point of view.</span></div>
+        <div className="footer-brand"><button className="footer-logo" onClick={goHome} aria-label="MGZ home"><img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" /></button><span>There's always more than one way to see things.</span></div>
         <nav className="footer-nav" aria-label="Footer navigation">
           <span className="footer-heading">EXPLORE</span>
           <button onClick={goHome}>Home</button>
-          <button onClick={showAbout}>About</button>
+          <button onClick={showAbout}>Our World</button>
           <button onClick={() => showCategory('All')}>Products</button>
         </nav>
         <nav className="footer-nav" aria-label="Collections">
           <span className="footer-heading">COLLECTIONS</span>
           <button onClick={() => showCategory('Sweatshirts')}>Sweatshirts</button>
           <button onClick={() => showCategory('Sweatpants')}>Sweatpants</button>
-          <button onClick={() => showCategory('Denim Pants')}>Denim Pants</button>
-          <button onClick={openBag}>Your bag ({bag.length})</button>
+          {/* <button onClick={openBag}>Your bag ({bag.length})</button> */}
         </nav>
-        <div className="footer-bottom"><span>© MGZ 2025 · MADE FOR REAL LIFE</span><button className="footer-bag" onClick={openBag}>BAG ({bag.length})</button></div>
+        <div className="footer-bottom"><span>© MGZ 2025 · MADE FOR REAL LIFE</span></div>
       </footer>
-      {menuOpen && <CategoryDrawer onClose={() => setMenuOpen(false)} onCategory={showCategory} />}
+
+      {menuOpen && (
+        <CategoryDrawer
+          onClose={() => setMenuOpen(false)}
+          onCategory={showCategory}
+          onShop={() => showCategory('All')}
+          onAbout={() => {
+            setMenuOpen(false);
+            showAbout();
+          }}
+          onSearch={() => {
+            setMenuOpen(false);
+            setSearchOpen(true);
+            setBagOpen(false);
+          }}
+          onBag={openBag}
+          bagCount={bag.length}
+        />
+      )}
+
       {bagOpen && <BagDrawer items={bag} onClose={() => setBagOpen(false)} onCheckout={showCheckout} onRemove={(index) => setBag((current) => current.filter((_, itemIndex) => itemIndex !== index))} />}
       {searchOpen && <SearchPanel onClose={() => setSearchOpen(false)} onProduct={showProduct} />}
       {notice && <div className="toast" role="status">{notice}</div>}
