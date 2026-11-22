@@ -1,6 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Snowfall from 'react-snowfall';
 import { createRoot } from 'react-dom/client';
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+  useParams
+} from 'react-router-dom';
+
 import './styles.css';
 
 const products = [
@@ -122,34 +131,6 @@ function BagIcon() {
     </svg>
   );
 }
-
-// function Header({ headerRef, scrolled, home, menuOpen, bagCount, onMenu, onSearch, onBag, onHome }) {
-//   return (
-//     <header ref={headerRef} className={`site-header ${home ? 'home-mode' : 'not-home'}  ${menuOpen ? 'menu-open' : ''}`}>
-//       <button className={`menu-trigger ${menuOpen ? 'is-open' : ''}`} onClick={onMenu} aria-label={menuOpen ? 'Close collections menu' : 'Open collections menu'} aria-expanded={menuOpen} aria-controls="category-drawer">
-//         <span />
-//         <span />
-//       </button>
-//       <button className="brand-mark" onClick={onHome} aria-label="MGZ home">
-//         <span
-//           className="brand-mark-image"
-//           style={{ '--logo-mask': `url("${import.meta.env.BASE_URL}mgz-logo.png")` }}
-//           aria-hidden="true"
-//         />
-//       </button>
-//       <div className="header-actions">
-//         <button className="icon-button search-trigger" onClick={onSearch} aria-label="Search products">
-//           <SearchIcon />
-//         </button>
-//         <button className="icon-button bag-trigger" onClick={onBag} aria-label={`Open bag, ${bagCount} ${bagCount === 1 ? 'item' : 'items'}`}>
-//           <BagIcon />
-//           {bagCount > 0 && <span className="bag-count">{bagCount}</span>}
-//         </button>
-//       </div>
-//     </header>
-//   );
-// }
-
 
 
 
@@ -443,18 +424,34 @@ function AboutPage({ onHome, onShop }) {
     <main className="about-page">
       <button className="back-link" onClick={onHome}>← Back to home</button>
       <section className="about-intro">
-        <span className="eyebrow">A LITTLE ABOUT US / MGZ</span>
-        <h1>Made for real life<span className="period">.</span></h1>
-        <p>MGZ is a point of view on everyday dressing: easy layers, familiar favourites, and pieces that feel like you from the very first wear.</p>
-        <button className="about-shop-button" onClick={onShop}>Find your everyday <ArrowIcon /></button>
-      </section>
-      <div className="about-image">
-        <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=2200&q=85" alt="A thoughtful edit of everyday clothing" />
-      </div>
-      <section className="about-note">
-        <span className="eyebrow">OUR KIND OF EVERYDAY</span>
-        <h2>Less rush.<br /><em>More real life.</em></h2>
-        <p>We believe getting dressed should feel simple. So we make considered essentials designed to be worn often, lived in, and loved for a long time.</p>
+        <div className="about-info">
+          <span className="eyebrow">A LITTLE ABOUT US / MGZ</span>
+          <h1>Made for real life<span className="period">.</span></h1>
+          <p>More than clothing. A different point of view.
+
+            MGZ is an independent streetwear brand born in Egypt, inspired by the balance between timeless vintage aesthetics and modern street culture.
+
+            We believe style isn't about following trends or trying to fit in. It's about individuality, confidence, and feeling comfortable in your own skin.
+
+            Our approach is simple: clean silhouettes, thoughtful details, and effortless comfort. Every piece is designed to become part of your everyday life — easy to wear, easy to style, and made to feel like you.
+
+            We don't believe in dressing for the moment. We believe in creating pieces that stay relevant beyond it.
+
+            MGZ. Made for real life. Worn your way.</p>
+        </div>
+
+
+        <div className="about-image">
+          <div className="phone-frame">
+            <div className="phone-screen">
+              <img
+                src={`${import.meta.env.BASE_URL}mgz-about.gif`}
+                alt="MGZ collection"
+              />
+            </div>
+          </div>
+        </div>
+
       </section>
     </main>
   );
@@ -518,8 +515,8 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
           <h1>{product.name}<span className="period">.</span></h1>
           <span className="detail-price">${product.price}.00</span>
           <p className="detail-description">Your new favourite, already broken in. A relaxed-fit essential with a soft, heavyweight feel — made for slow mornings and long way homes.</p>
-          <div className="detail-color"><span>Choose a colour</span><span className="color-value">{color}</span></div>
-          <div className="color-options" aria-label="Available colors">{product.colors.map((option) => <button key={option.name} className={`color-swatch ${color === option.name ? 'selected' : ''}`} style={{ '--swatch-color': option.value }} onClick={() => setColor(option.name)} aria-label={option.name} aria-pressed={color === option.name} title={option.name} />)}</div>
+          {/* <div className="detail-color"><span>Choose a colour</span><span className="color-value">{color}</span></div> */}
+          {/* <div className="color-options" aria-label="Available colors">{product.colors.map((option) => <button key={option.name} className={`color-swatch ${color === option.name ? 'selected' : ''}`} style={{ '--swatch-color': option.value }} onClick={() => setColor(option.name)} aria-label={option.name} aria-pressed={color === option.name} title={option.name} />)}</div> */}
           <div className="size-label"><span>Choose your size</span><button className="size-guide-trigger" onClick={() => setSizeGuideOpen(true)}>Size guide ↗</button></div>
           <div className="size-options">{['XS', 'S', 'M', 'L', 'XL'].map((item) => <button key={item} className={size === item ? 'selected' : ''} onClick={() => { setSize(item); setError(false); }}>{item}</button>)}</div>
           {error && <p className="size-error">Pick your size first, please.</p>}
@@ -535,12 +532,7 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
           </div>
         ))}
       </div>
-      <section className="interest-section product-recommendations">
-        <div className="section-heading">
-          <div><span className="eyebrow">A LITTLE SOMETHING</span><h2>May be interested in<span className="period">.</span></h2></div>
-        </div>
-        <ProductGrid items={relatedProducts} onSelect={onProduct} />
-      </section>
+
       {sizeGuideOpen && (
         <div className="size-guide-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setSizeGuideOpen(false); }}>
           <section className="size-guide-dialog" role="dialog" aria-modal="true" aria-labelledby="size-guide-title">
@@ -619,6 +611,60 @@ function CheckoutPage({ items, onBack, onComplete }) {
   );
 }
 
+
+
+
+function CollectionRoute({ onProduct, onHome }) {
+  const { category } = useParams();
+
+  const categories = {
+    all: 'All',
+    sweatshirts: 'Sweatshirts',
+    sweatpants: 'Sweatpants',
+  };
+
+  const categoryName = categories[category?.toLowerCase()];
+
+  if (!categoryName) {
+    return <Navigate to="/shop/all" replace />;
+  }
+
+  return (
+    <CollectionPage
+      category={categoryName}
+      onProduct={onProduct}
+      onHome={onHome}
+    />
+  );
+}
+
+function ProductRoute({ onBack, onAdd, onProduct }) {
+  const { id } = useParams();
+
+  const product = products.find(
+    (item) => item.id === Number(id)
+  );
+
+  if (!product) {
+    return <Navigate to="/shop/all" replace />;
+  }
+
+  return (
+    <ProductPage
+      key={product.id}
+      product={product}
+      onBack={() => onBack(product.category)}
+      onAdd={onAdd}
+      onProduct={onProduct}
+    />
+  );
+}
+
+
+
+
+
+
 function SearchPanel({ onClose, onProduct }) {
   const [query, setQuery] = useState('');
   const matches = query.trim() ? products.filter((product) => `${product.name} ${product.category} ${product.color}`.toLowerCase().includes(query.toLowerCase())) : [];
@@ -642,148 +688,406 @@ function SearchPanel({ onClose, onProduct }) {
   );
 }
 
+
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isHome = location.pathname === '/';
+
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef(null);
-  const [page, setPage] = useState({ type: 'home' });
-  const pageHistory = useRef([]);
+
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
   const [bag, setBag] = useState([]);
   const [notice, setNotice] = useState('');
 
-
+  // Scroll effect for the Home navbar
   useEffect(() => {
     let frame = 0;
+
     function updateScroll() {
       if (frame) return;
+
       frame = window.requestAnimationFrame(() => {
         frame = 0;
+
         const scrollY = window.scrollY;
         const isScrolled = scrollY > 80;
-        setScrolled((current) => current === isScrolled ? current : isScrolled);
+
+        setScrolled((current) =>
+          current === isScrolled ? current : isScrolled
+        );
 
         const header = headerRef.current;
+
         if (!header || !header.classList.contains('home-mode')) return;
 
         const hero = document.querySelector('.hero');
-        const heroHeight = hero?.getBoundingClientRect().height || window.innerHeight;
+        const heroHeight =
+          hero?.getBoundingClientRect().height || window.innerHeight;
+
         const progress = Math.min(1, Math.max(0, scrollY / heroHeight));
         const startTop = heroHeight * 0.5 - 8;
         const isMobile = window.innerWidth <= 760;
         const headerHeight = isMobile ? 50 : 58;
-        const logoTop = startTop + (headerHeight / 2 - startTop) * progress;
-        const logoBaseSize = parseFloat(getComputedStyle(header.querySelector('.brand-mark')).fontSize);
-        // const navbarLogoSize = isMobile ? 25 : 29;
+
+        const logoTop =
+          startTop + (headerHeight / 2 - startTop) * progress;
+
+        const logoBaseSize = parseFloat(
+          getComputedStyle(header.querySelector('.brand-mark')).fontSize
+        );
+
         const navbarLogoSize = isMobile ? 55 : 64;
-        const logoScale = 1 - (1 - navbarLogoSize / logoBaseSize) * progress;
-        const glassHeight = heroHeight + (headerHeight - heroHeight) * progress;
-        // const glassWidth = isScrolled ? 75 : 100;
-        const glassWidth = 100;
-        const navbarProgress = Math.min(1, Math.max(0, (progress - 0.94) / 0.06));
-        // const logoColor = [245, 242, 235].map((start, index) => Math.round(start + ([74, 83, 66][index] - start) * navbarProgress));
+        const logoScale =
+          1 - (1 - navbarLogoSize / logoBaseSize) * progress;
+
+        const glassHeight =
+          heroHeight + (headerHeight - heroHeight) * progress;
+
+        const navbarProgress = Math.min(
+          1,
+          Math.max(0, (progress - 0.94) / 0.06)
+        );
+
         const logoColor = [245, 242, 235].map((start) =>
           Math.round(start + (20 - start) * navbarProgress)
         );
 
         header.style.setProperty('--glass-height', `${glassHeight}px`);
-        header.style.setProperty('--glass-width', `${glassWidth}%`);
+        header.style.setProperty('--glass-width', '100%');
         header.style.setProperty('--glass-opacity', `${navbarProgress}`);
         header.style.setProperty('--nav-content-opacity', `${navbarProgress}`);
-        header.style.setProperty('--nav-content-events', navbarProgress > 0 ? 'auto' : 'none');
-        header.style.setProperty('--brand-color', `rgb(${logoColor.join(', ')})`);
+        header.style.setProperty(
+          '--nav-content-events',
+          navbarProgress > 0 ? 'auto' : 'none'
+        );
+        header.style.setProperty(
+          '--brand-color',
+          `rgb(${logoColor.join(', ')})`
+        );
         header.style.setProperty(
           '--nav-text-color',
           `rgb(${logoColor.join(', ')})`
         );
-        // header.style.setProperty('--glass-radius', `${isScrolled ? 30 : 0}px`);
         header.style.setProperty('--glass-radius', '0px');
         header.style.setProperty('--glass-edge-alpha', '0');
         header.style.setProperty('--logo-top', `${logoTop}px`);
         header.style.setProperty('--logo-scale', `${logoScale}`);
         header.style.setProperty('--logo-opacity', '1');
-        header.style.setProperty('--logo-pointer-events', progress >= 1 ? 'none' : 'auto');
+        header.style.setProperty(
+          '--logo-pointer-events',
+          progress >= 1 ? 'none' : 'auto'
+        );
       });
     }
 
     window.addEventListener('scroll', updateScroll, { passive: true });
     window.addEventListener('resize', updateScroll);
     updateScroll();
+
     return () => {
       window.removeEventListener('scroll', updateScroll);
       window.removeEventListener('resize', updateScroll);
+
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [page.type]);
+  }, [isHome]);
 
+  // Scroll to top when the route changes
+
+  // Navbar scroll effect
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page]);
+    let frame = 0;
 
-  function navigate(nextPage) {
-    pageHistory.current.push(page);
-    setPage(nextPage);
+    function updateScroll() {
+      if (frame) return;
+
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+
+        const scrollY = window.scrollY;
+        const isScrolled = scrollY > 80;
+
+        setScrolled((current) =>
+          current === isScrolled ? current : isScrolled
+        );
+
+        const header = headerRef.current;
+        if (!header) return;
+
+        const isMobile = window.innerWidth <= 760;
+        const headerHeight = isMobile ? 50 : 58;
+
+        const logoBaseSize = parseFloat(
+          getComputedStyle(
+            header.querySelector('.brand-mark')
+          ).fontSize
+        );
+
+        const navbarLogoSize = isMobile ? 55 : 64;
+
+        // INNER PAGES NAVBAR
+        if (!header.classList.contains('home-mode')) {
+          header.style.setProperty('--glass-height', `${headerHeight}px`);
+          header.style.setProperty('--glass-width', '100%');
+          header.style.setProperty('--glass-opacity', '1');
+
+          header.style.setProperty('--nav-content-opacity', '1');
+          header.style.setProperty('--nav-content-events', 'auto');
+
+          header.style.setProperty('--brand-color', 'rgb(20, 20, 20)');
+          header.style.setProperty('--nav-text-color', 'rgb(20, 20, 20)');
+
+          header.style.setProperty('--glass-radius', '0px');
+          header.style.setProperty('--glass-edge-alpha', '0');
+
+          header.style.setProperty(
+            '--logo-top',
+            `${headerHeight / 2}px`
+          );
+
+          header.style.setProperty(
+            '--logo-scale',
+            `${navbarLogoSize / logoBaseSize}`
+          );
+
+          header.style.setProperty('--logo-opacity', '1');
+          header.style.setProperty('--logo-pointer-events', 'auto');
+
+          return;
+        }
+
+        // HOME PAGE NAVBAR ANIMATION (UNCHANGED)
+
+        const hero = document.querySelector('.hero');
+        const heroHeight =
+          hero?.getBoundingClientRect().height || window.innerHeight;
+
+        const progress = Math.min(
+          1,
+          Math.max(0, scrollY / heroHeight)
+        );
+
+        const startTop = heroHeight * 0.5 - 8;
+
+        const logoTop =
+          startTop + (headerHeight / 2 - startTop) * progress;
+
+        const logoScale =
+          1 - (1 - navbarLogoSize / logoBaseSize) * progress;
+
+        const glassHeight =
+          heroHeight + (headerHeight - heroHeight) * progress;
+
+        const navbarProgress = Math.min(
+          1,
+          Math.max(0, (progress - 0.94) / 0.06)
+        );
+
+        const logoColor = [245, 242, 235].map((start) =>
+          Math.round(start + (20 - start) * navbarProgress)
+        );
+
+        header.style.setProperty('--glass-height', `${glassHeight}px`);
+        header.style.setProperty('--glass-width', '100%');
+        header.style.setProperty('--glass-opacity', `${navbarProgress}`);
+
+        header.style.setProperty(
+          '--nav-content-opacity',
+          `${navbarProgress}`
+        );
+
+        header.style.setProperty(
+          '--nav-content-events',
+          navbarProgress > 0 ? 'auto' : 'none'
+        );
+
+        header.style.setProperty(
+          '--brand-color',
+          `rgb(${logoColor.join(', ')})`
+        );
+
+        header.style.setProperty(
+          '--nav-text-color',
+          `rgb(${logoColor.join(', ')})`
+        );
+
+        header.style.setProperty('--glass-radius', '0px');
+        header.style.setProperty('--glass-edge-alpha', '0');
+        header.style.setProperty('--logo-top', `${logoTop}px`);
+        header.style.setProperty('--logo-scale', `${logoScale}`);
+        header.style.setProperty('--logo-opacity', '1');
+
+        header.style.setProperty(
+          '--logo-pointer-events',
+          progress >= 1 ? 'none' : 'auto'
+        );
+      });
+    }
+
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('resize', updateScroll);
+
+    updateScroll();
+
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+      window.removeEventListener('resize', updateScroll);
+
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [isHome]);
+
+
+  function goHome() {
+    navigate('/');
+    setBagOpen(false);
+    setMenuOpen(false);
   }
-  function goBack() { setPage(pageHistory.current.pop() || { type: 'home' }); }
-  function goHome() { pageHistory.current = []; setPage({ type: 'home' }); setBagOpen(false); }
-  function showProduct(product) { navigate({ type: 'product', product }); setSearchOpen(false); }
-  function showCategory(category) { navigate({ type: 'collection', category }); setMenuOpen(false); }
-  function showCheckout() { setBagOpen(false); navigate({ type: 'checkout' }); }
+
+  function showProduct(product) {
+    navigate(`/product/${product.id}`);
+    setSearchOpen(false);
+    setMenuOpen(false);
+  }
+
+  function showCategory(category) {
+    navigate(`/shop/${category.toLowerCase()}`);
+    setMenuOpen(false);
+  }
+
+  function showCheckout() {
+    setBagOpen(false);
+    navigate('/checkout');
+  }
+
   function showAbout() {
-    navigate({ type: 'about' });
+    navigate('/about');
+    setMenuOpen(false);
   }
-  function openBag() { setBagOpen(true); setMenuOpen(false); setSearchOpen(false); }
+
+  function openBag() {
+    setBagOpen(true);
+    setMenuOpen(false);
+    setSearchOpen(false);
+  }
+
   function addToBag(product, size, color) {
     setBag((current) => [...current, { product, size, color }]);
+
     setNotice(`${product.name} · ${color} · ${size} added to your bag`);
+
     window.setTimeout(() => setNotice(''), 2800);
   }
-  function completeOrder() { setBag([]); }
+
+  function completeOrder() {
+    setBag([]);
+  }
 
   return (
     <>
-
-      {/* <Snowfall
-        color="#ffffff"
-        snowflakeCount={100}
-        speed={[0.5, 2]}
-        radius={[1, 3]}
-        wind={[-0.5, 1]}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100vh',
-          pointerEvents: 'none',
-          zIndex: 9999,
+      <Header
+        headerRef={headerRef}
+        scrolled={scrolled}
+        home={isHome}
+        menuOpen={menuOpen}
+        bagCount={bag.length}
+        onMenu={() => setMenuOpen((open) => !open)}
+        onSearch={() => {
+          setSearchOpen(true);
+          setMenuOpen(false);
+          setBagOpen(false);
         }}
-      />  */}
+        onBag={openBag}
+        onHome={goHome}
+        onShop={() => showCategory('All')}
+        onAbout={showAbout}
+      />
 
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              onCategory={showCategory}
+              onProduct={showProduct}
+            />
+          }
+        />
 
-      <Header headerRef={headerRef} scrolled={scrolled} home={page.type === 'home'} menuOpen={menuOpen} bagCount={bag.length} onMenu={() => setMenuOpen((open) => !open)} onSearch={() => { setSearchOpen(true); setMenuOpen(false); setBagOpen(false); }} onBag={openBag} onHome={goHome} onShop={() => showCategory('All')}
-        onAbout={showAbout} />
-      {page.type === 'home' && <HomePage onCategory={showCategory} onProduct={showProduct} />}
-      {page.type === 'collection' && <CollectionPage category={page.category} onProduct={showProduct} onHome={goBack} />}
-      {page.type === 'product' && <ProductPage key={page.product.id} product={page.product} onBack={goBack} onAdd={addToBag} onProduct={showProduct} />}
-      {page.type === 'about' && <AboutPage onHome={goBack} onShop={() => showCategory('All')} />}
-      {page.type === 'checkout' && <CheckoutPage items={bag} onBack={goBack} onComplete={completeOrder} />}
+        <Route
+          path="/shop/:category"
+          element={
+            <CollectionRoute
+              onProduct={showProduct}
+              onHome={goHome}
+            />
+          }
+        />
+
+        <Route
+          path="/product/:id"
+          element={
+            <ProductRoute
+              onBack={(category) => showCategory(category)}
+              onAdd={addToBag}
+              onProduct={showProduct}
+            />
+          }
+        />
+
+        <Route
+          path="/about"
+          element={
+            <AboutPage
+              onHome={goHome}
+              onShop={() => showCategory('All')}
+            />
+          }
+        />
+
+        <Route
+          path="/checkout"
+          element={
+            <CheckoutPage
+              items={bag}
+              onBack={() => showCategory('All')}
+              onComplete={completeOrder}
+            />
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+
       <footer className="site-footer">
-        <div className="footer-brand"><button className="footer-logo" onClick={goHome} aria-label="MGZ home"><img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" /></button><span>There's always more than one way to see things.</span></div>
+        <div className="footer-brand">
+          <button className="footer-logo" onClick={goHome} aria-label="MGZ home">
+            <img src={`${import.meta.env.BASE_URL}mgz-logo.png`} alt="" />
+          </button>
+          <span>There's always more than one way to see things.</span>
+        </div>
+
         <nav className="footer-nav" aria-label="Footer navigation">
           <span className="footer-heading">EXPLORE</span>
           <button onClick={goHome}>Home</button>
           <button onClick={showAbout}>Our World</button>
           <button onClick={() => showCategory('All')}>Products</button>
         </nav>
+
         <nav className="footer-nav" aria-label="Collections">
           <span className="footer-heading">COLLECTIONS</span>
           <button onClick={() => showCategory('Sweatshirts')}>Sweatshirts</button>
           <button onClick={() => showCategory('Sweatpants')}>Sweatpants</button>
-          {/* <button onClick={openBag}>Your bag ({bag.length})</button> */}
         </nav>
-        <div className="footer-bottom"><span>© MGZ 2025 · MADE FOR REAL LIFE</span></div>
+
+        <div className="footer-bottom">
+          <span>© MGZ 2025 · MADE FOR REAL LIFE</span>
+        </div>
       </footer>
 
       {menuOpen && (
@@ -791,10 +1095,7 @@ function App() {
           onClose={() => setMenuOpen(false)}
           onCategory={showCategory}
           onShop={() => showCategory('All')}
-          onAbout={() => {
-            setMenuOpen(false);
-            showAbout();
-          }}
+          onAbout={showAbout}
           onSearch={() => {
             setMenuOpen(false);
             setSearchOpen(true);
@@ -805,11 +1106,36 @@ function App() {
         />
       )}
 
-      {bagOpen && <BagDrawer items={bag} onClose={() => setBagOpen(false)} onCheckout={showCheckout} onRemove={(index) => setBag((current) => current.filter((_, itemIndex) => itemIndex !== index))} />}
-      {searchOpen && <SearchPanel onClose={() => setSearchOpen(false)} onProduct={showProduct} />}
+      {bagOpen && (
+        <BagDrawer
+          items={bag}
+          onClose={() => setBagOpen(false)}
+          onCheckout={showCheckout}
+          onRemove={(index) =>
+            setBag((current) =>
+              current.filter((_, itemIndex) => itemIndex !== index)
+            )
+          }
+        />
+      )}
+
+      {searchOpen && (
+        <SearchPanel
+          onClose={() => setSearchOpen(false)}
+          onProduct={showProduct}
+        />
+      )}
+
       {notice && <div className="toast" role="status">{notice}</div>}
     </>
   );
 }
 
-createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
+
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </React.StrictMode>
+);

@@ -998,12 +998,14 @@ select:focus-visible {
 
 .about-page {
   min-height: 80vh;
-  padding: 115px 5.2% 100px;
 }
 
 .about-intro {
-  max-width: 850px;
-  padding: 58px 0 62px;
+  padding-top: 115px 0 0 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .about-intro .eyebrow {
@@ -1013,7 +1015,7 @@ select:focus-visible {
 
 .about-intro h1 {
   margin: 0;
-  font-size: clamp(58px, 9vw, 112px);
+  font-size: clamp(55px, 8vw, 100px);
   font-weight: 500;
   letter-spacing: -.075em;
   line-height: .95;
@@ -1058,19 +1060,138 @@ select:focus-visible {
   stroke-width: 1.4;
 }
 
-.about-image {
-  height: min(58vw, 680px);
-  min-height: 360px;
-  overflow: hidden;
-  background: #e3e0d7;
+
+.about-intro {
+  padding: 115px 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
 }
 
-.about-image img {
+.about-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.about-image {
+  /* flex: 0 1 500px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Phone Frame */
+
+.phone-frame {
+  position: relative;
+  width: clamp(170px, 19vw, 250px);
+  height: clamp(300px, 40vw, 460px);
+  aspect-ratio: 9 / 19.5;
+  padding: 8px;
+  border-radius: 34px;
+  background: #171717;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.16),
+    inset 0 0 0 1px #555;
+}
+
+/* Phone Screen */
+
+.phone-screen {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 44%;
+  border-radius: 30px;
+  overflow: hidden;
+  background: #e8e8e8;
+  position: relative;
 }
+
+.phone-screen img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Dynamic Island */
+
+.phone-frame::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 27%;
+  height: 17px;
+  background: #111;
+  border-radius: 20px;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Mobile */
+
+@media (max-width: 1230px) {
+  .about-intro {
+    flex-direction: row;
+    align-items: center;
+    padding: 90px 6% 65px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-intro {
+    flex-direction: column;
+    align-items: center;
+    padding: 90px 6% 65px;
+    gap: 40px;
+  }
+
+  .about-info {
+    width: 100%;
+  }
+
+  .about-image {
+    width: 250px !important;
+    height: 450px !important;
+    flex: none;
+  }
+
+  .phone-frame {
+    width: clamp(210px, 65vw, 280px);
+    height: 100%;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 34px;
+    background: #171717;
+    box-shadow:
+      0 25px 60px rgba(0, 0, 0, 0.16),
+      inset 0 0 0 1px #555;
+  }
+}
+
+@media (max-width: 380px) {
+  .phone-frame {
+    width: 220px;
+    height: 100%;
+    aspect-ratio: 9 / 19.5;
+    /* padding: 8px; */
+    border-radius: 34px;
+    background: #171717;
+    box-shadow:
+      0 25px 60px rgba(0, 0, 0, 0.16),
+      inset 0 0 0 1px #555;
+  }
+
+  .about-image {
+    width: 100%;
+    flex: none;
+    margin-left: 0px !important;
+  }
+}
+
 
 .about-note {
   padding: 86px 0 20px 10%;
@@ -1083,6 +1204,7 @@ select:focus-visible {
   letter-spacing: -.075em;
   line-height: .92;
 }
+
 
 .about-note h2 em {
   font-family: 'Playfair Display', serif;
@@ -2055,9 +2177,19 @@ select:focus-visible {
   }
 
   .about-image {
-    min-height: 310px;
-    height: 90vw;
-    max-height: 500px;
+    width: 100vw;
+    height: min(64vw, 650px);
+    min-height: 360px;
+    margin-left: calc(50% - 50vw);
+    overflow: hidden;
+  }
+
+  .about-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 44%;
   }
 
   .about-note {
@@ -2486,7 +2618,7 @@ select:focus-visible {
 
 
 /* Mobile Category Stacking Animation */
-@media (max-width: 480px) {
+@media (max-width: 760px) {
   .category-section {
     height: auto !important;
     overflow: visible !important;
@@ -2521,4 +2653,72 @@ select:focus-visible {
   .category-tile:nth-child(2) {
     z-index: 2;
   }
+}
+
+
+
+
+
+
+
+
+/* Fixed Navbar on all pages except Home */
+.site-header.not-home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  height: 70px;
+  background: #fff;
+
+  transform: none;
+  opacity: 1;
+}
+
+/* Keep navbar content visible */
+.site-header.not-home .right,
+.site-header.not-home .nav-center,
+.site-header.not-home .nav-right {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Make sure the logo is visible */
+.site-header.not-home .brand-mark {
+  opacity: 1;
+  pointer-events: auto;
+  /* font-size: 2em !important; */
+}
+
+.site-header.not-home .brand-mark-image {
+  width: 4em;
+  background-color: var(--brand-color, #f5f2eb);
+  mask-image: var(--logo-mask);
+
+}
+
+.site-header.not-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-header.not-home .right {
+  transform: translateY(-30%);
+}
+
+
+
+
+
+
+@media (max-width: 760px) {
+
+  .about-intro {
+    display: flex;
+    flex-direction: column;
+  }
+
 }
