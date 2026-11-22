@@ -337,6 +337,11 @@ select:focus-visible {
   transition: opacity .35s ease;
 }
 
+/* Hamburger menu color follows navbar scroll color */
+.site-header .menu-trigger {
+  color: var(--nav-text-color, inherit);
+}
+
 .menu-trigger span {
   width: 65px;
   height: 2px;
