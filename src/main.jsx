@@ -518,7 +518,7 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
           {/* <div className="detail-color"><span>Choose a colour</span><span className="color-value">{color}</span></div> */}
           {/* <div className="color-options" aria-label="Available colors">{product.colors.map((option) => <button key={option.name} className={`color-swatch ${color === option.name ? 'selected' : ''}`} style={{ '--swatch-color': option.value }} onClick={() => setColor(option.name)} aria-label={option.name} aria-pressed={color === option.name} title={option.name} />)}</div> */}
           <div className="size-label"><span>Choose your size</span><button className="size-guide-trigger" onClick={() => setSizeGuideOpen(true)}>Size guide ↗</button></div>
-          <div className="size-options">{['XS', 'S', 'M', 'L', 'XL'].map((item) => <button key={item} className={size === item ? 'selected' : ''} onClick={() => { setSize(item); setError(false); }}>{item}</button>)}</div>
+          <div className="size-options">{['M', 'L', 'XL', '2XL'].map((item) => <button key={item} className={size === item ? 'selected' : ''} onClick={() => { setSize(item); setError(false); }}>{item}</button>)}</div>
           {error && <p className="size-error">Pick your size first, please.</p>}
           <button className="add-button" onClick={addToBag}>Add to bag — ${product.price}</button>
           <p className="detail-note">Easy returns · Made for everyday · Free shipping over $120</p>
