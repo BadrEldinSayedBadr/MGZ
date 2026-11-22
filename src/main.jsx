@@ -220,7 +220,7 @@ function CategoryDrawer({
         aria-label="Main navigation"
       >
         <div className="drawer-heading">
-          <span className="eyebrow">MGZ / MENU</span>
+          <span className="eyebrow">MGZ. / MENU</span>
 
           <button
             className="close-button drawer-close"
@@ -287,7 +287,7 @@ function BagDrawer({ items, onClose, onRemove, onCheckout }) {
     <div className="bag-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <aside className="bag-drawer" role="dialog" aria-modal="true" aria-label="Your bag">
         <div className="bag-drawer-heading">
-          <div><span className="eyebrow">YOUR MGZ EDIT</span><h2>Your bag<span className="period">.</span></h2></div>
+          <div><span className="eyebrow">YOUR MGZ. EDIT</span><h2>Your bag<span className="period">.</span></h2></div>
           <button className="close-button" onClick={onClose} aria-label="Close bag">×</button>
         </div>
         {items.length === 0 ? (
@@ -338,7 +338,7 @@ function ProductGrid({ items, onSelect }) {
 function HomePage({ onCategory, onProduct }) {
   return (
     <main>
-      <section className="hero" aria-label="MGZ — vintage everyday wear">
+      <section className="hero" aria-label="MGZ. — vintage everyday wear">
         {/* <img className="hero-image" src={`${import.meta.env.BASE_URL}home.jpg`} alt="Fashion model walking on a runway" fetchPriority="high" />   */}
 
         <div className="hero-shade" />
@@ -351,7 +351,7 @@ function HomePage({ onCategory, onProduct }) {
             <p>There's always more than one way to see things. <br />
 
 
-              Born and based in Egypt, MGZ is an independent streetwear brand built on individuality, simplicity, and a different way of seeing the world. <br />
+              Born and based in Egypt, MGZ. is an independent streetwear brand built on individuality, simplicity, and a different way of seeing the world. <br />
               {/* What began as eyewear has evolved into a universe shaped by Japanese precision, 90s attitude, and architectural clarity. A world where design is discipline, and non conformity is instinct... */}
               Between past and future. Between structure and instinct. <br />
             </p>
@@ -359,7 +359,7 @@ function HomePage({ onCategory, onProduct }) {
               <img
                 className="interestLogo"
                 src={`${import.meta.env.BASE_URL}mgz-logo.png`}
-                alt="MGZ"
+                alt="MGZ."
               />
               <span className="interest-title">— EGYPT</span>
             </div>
@@ -390,11 +390,11 @@ function HomePage({ onCategory, onProduct }) {
       <section className="manifesto" id="about">
         <img src={`${import.meta.env.BASE_URL}manifesto.png`} alt="Vintage clothing in warm afternoon light" loading="lazy" />
         <div className="manifesto-overlay" />
-        <div className="manifesto-copy"><span className="eyebrow">A DIFFERENT POINT OF VIEW</span><h2>Dress beyond<br /><em>the ordinary.</em></h2><p>Not made to follow trends.<br />Made to create your own.</p><button className="light-link" onClick={() => onCategory('All')}>Discover MGZ <ArrowIcon /></button></div>
+        <div className="manifesto-copy"><span className="eyebrow">A DIFFERENT POINT OF VIEW</span><h2>Dress beyond<br /><em>the ordinary.</em></h2><p>Not made to follow trends.<br />Made to create your own.</p><button className="light-link" onClick={() => onCategory('All')}>Discover MGZ. <ArrowIcon /></button></div>
       </section>
 
       <section className="newsletter">
-        <span className="eyebrow">THE MGZ POSTCARD</span>
+        <span className="eyebrow">THE MGZ. POSTCARD</span>
         <h2>Good things, occasionally.</h2>
         <p>New pieces, old stories, and a little something for your inbox.</p>
         <NewsletterForm />
@@ -425,11 +425,11 @@ function AboutPage({ onHome, onShop }) {
       <button className="back-link" onClick={onHome}>← Back to home</button>
       <section className="about-intro">
         <div className="about-info">
-          <span className="eyebrow">A LITTLE ABOUT US / MGZ</span>
+          <span className="eyebrow">A LITTLE ABOUT US / MGZ.</span>
           <h1>Made for real life<span className="period">.</span></h1>
           <p>More than clothing. A different point of view.
 
-            MGZ is an independent streetwear brand born in Egypt, inspired by the balance between timeless vintage aesthetics and modern street culture.
+            MGZ. is an independent streetwear brand born in Egypt, inspired by the balance between timeless vintage aesthetics and modern street culture.
 
             We believe style isn't about following trends or trying to fit in. It's about individuality, confidence, and feeling comfortable in your own skin.
 
@@ -465,7 +465,7 @@ function CollectionPage({ category, onProduct, onHome }) {
     <main className="collection-page">
       <div className="collection-intro">
         <button className="back-link" onClick={onHome}>← Back to home</button>
-        <span className="eyebrow">MGZ / THE COLLECTION</span>
+        <span className="eyebrow">MGZ. / THE COLLECTION</span>
         <h1>{category === 'All' ? 'The whole lot' : category}<span className="period">.</span></h1>
         <p>Easy layers. Familiar favourites. Made to be worn on repeat.</p>
       </div>
@@ -511,7 +511,7 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
           <img src={galleryImages[0]} alt={`${product.name} in ${color}`} />
         </div>
         <div className="detail-info">
-          <span className="eyebrow">{product.category} / MGZ ORIGINAL</span>
+          <span className="eyebrow">{product.category} / MGZ. ORIGINAL</span>
           <h1>{product.name}<span className="period">.</span></h1>
           <span className="detail-price">${product.price}.00</span>
           <p className="detail-description">Your new favourite, already broken in. A relaxed-fit essential with a soft, heavyweight feel — made for slow mornings and long way homes.</p>
@@ -537,7 +537,7 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
         <div className="size-guide-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setSizeGuideOpen(false); }}>
           <section className="size-guide-dialog" role="dialog" aria-modal="true" aria-labelledby="size-guide-title">
             <div className="size-guide-heading">
-              <div><span className="eyebrow">MGZ / FIT NOTES</span><h2 id="size-guide-title">Size guide<span className="period">.</span></h2></div>
+              <div><span className="eyebrow">MGZ. / FIT NOTES</span><h2 id="size-guide-title">Size guide<span className="period">.</span></h2></div>
               <button className="close-button" onClick={() => setSizeGuideOpen(false)} aria-label="Close size guide">×</button>
             </div>
             <p>Relaxed fit. Choose your usual size, or select a size below to continue.</p>
@@ -566,7 +566,7 @@ function CheckoutPage({ items, onBack, onComplete }) {
   if (orderPlaced) {
     return (
       <main className="checkout-page checkout-success">
-        <span className="eyebrow">THANK YOU FOR SHOPPING MGZ</span>
+        <span className="eyebrow">THANK YOU FOR SHOPPING MGZ.</span>
         <h1>Your order is in<span className="period">.</span></h1>
         <p>Your order has been placed. We’ll be in touch soon to confirm delivery details.</p>
         <button className="add-button" onClick={onBack}>Continue shopping</button>
@@ -1086,7 +1086,7 @@ function App() {
         </nav>
 
         <div className="footer-bottom">
-          <span>© MGZ 2025 · MADE FOR REAL LIFE</span>
+          <span>© MGZ. 2025 · MADE FOR REAL LIFE</span>
         </div>
       </footer>
 
