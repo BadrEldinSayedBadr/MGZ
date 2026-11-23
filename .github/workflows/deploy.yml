@@ -32,8 +32,16 @@ jobs:
           VITE_SHOPIFY_STORE_DOMAIN: ${{ vars.VITE_SHOPIFY_STORE_DOMAIN }}
           VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
         run: |
-          if [ -z "$VITE_SHOPIFY_STORE_DOMAIN" ] || [ -z "$VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN" ]; then
-            echo "Configure VITE_SHOPIFY_STORE_DOMAIN and VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN in GitHub Actions variables/secrets."
+          missing=0
+          if [ -z "$VITE_SHOPIFY_STORE_DOMAIN" ]; then
+            echo "::error::Missing GitHub Actions repository variable: VITE_SHOPIFY_STORE_DOMAIN"
+            missing=1
+          fi
+          if [ -z "$VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN" ]; then
+            echo "::error::Missing GitHub Actions repository secret: VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN"
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
             exit 1
           fi
       - name: Build site
