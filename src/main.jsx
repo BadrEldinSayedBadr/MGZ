@@ -11,88 +11,13 @@ import {
 } from 'react-router-dom';
 
 import './styles.css';
+import "./testShopify";
 
-const products = [
-  {
-    id: 1,
-    name: 'The Sunday Sweatshirt',
-    category: 'Sweatshirts',
-    price: 68,
-    color: 'Moss',
-    colors: [{ name: 'Moss', value: '#59634a' }, { name: 'Oatmeal', value: '#c9bda8' }, { name: 'Washed black', value: '#343631' }],
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85',
-    tag: 'Bestseller',
-  },
-  {
-    id: 2,
-    name: 'Off-Duty Crewneck',
-    category: 'Sweatshirts',
-    price: 74,
-    color: 'Oatmeal',
-    colors: [{ name: 'Oatmeal', value: '#c9bda8' }, { name: 'Moss', value: '#59634a' }, { name: 'Washed black', value: '#343631' }],
-    image: 'https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1000&q=85',
-    tag: 'New in',
-  },
-  {
-    id: 3,
-    name: 'Good Days Hoodie',
-    category: 'Sweatshirts',
-    price: 82,
-    color: 'Washed black',
-    colors: [{ name: 'Washed black', value: '#343631' }, { name: 'Moss', value: '#59634a' }, { name: 'Oatmeal', value: '#c9bda8' }],
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85&sat=-35',
-    tag: '',
-  },
-  {
-    id: 4,
-    name: 'The Everyday Jogger',
-    category: 'Sweatpants',
-    price: 62,
-    color: 'Moss',
-    colors: [{ name: 'Moss', value: '#59634a' }, { name: 'Vintage grey', value: '#9a9b94' }, { name: 'Oatmeal', value: '#c9bda8' }],
-    image: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=1000&q=85',
-    tag: 'Bestseller',
-  },
-  {
-    id: 5,
-    name: 'Slow Morning Sweatpant',
-    category: 'Sweatpants',
-    price: 66,
-    color: 'Vintage grey',
-    colors: [{ name: 'Vintage grey', value: '#9a9b94' }, { name: 'Moss', value: '#59634a' }, { name: 'Oatmeal', value: '#c9bda8' }],
-    image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=1000&q=85',
-    tag: '',
-  },
-  {
-    id: 6,
-    name: 'Weekend Uniform Set',
-    category: 'Sweatpants',
-    price: 118,
-    color: 'Oatmeal',
-    colors: [{ name: 'Oatmeal', value: '#c9bda8' }, { name: 'Moss', value: '#59634a' }, { name: 'Vintage grey', value: '#9a9b94' }],
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85',
-    tag: 'The set',
-  },
-];
 
-const productGalleryImages = {
-  Sweatshirts: [
-    'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85&sat=-45',
-  ],
-  Sweatpants: [
-    'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=1000&q=85&crop=entropy',
-    'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1000&q=85',
-    'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=1000&q=85&sat=-45',
-  ],
-};
+import { getProducts, getCollections, createShopifyCheckout } from "./services/shopify";
+
+
+
 
 const colorImageIndexes = {
   Sweatshirts: { Moss: 0, Oatmeal: 3, 'Washed black': 4 },
@@ -193,7 +118,8 @@ function CategoryDrawer({
   onAbout,
   onSearch,
   onBag,
-  bagCount
+  bagCount,
+  collections
 }) {
   useEffect(() => {
     function handleKey(event) {
@@ -254,13 +180,14 @@ function CategoryDrawer({
         <div className="drawer-collections">
           <span className="eyebrow">COLLECTIONS</span>
 
-          <button onClick={() => onCategory('Sweatshirts')}>
-            Sweatshirts
-          </button>
-
-          <button onClick={() => onCategory('Sweatpants')}>
-            Sweatpants
-          </button>
+          {collections.map((collection) => (
+            <button
+              key={collection.id}
+              onClick={() => onCategory(collection.handle)}
+            >
+              {collection.title}
+            </button>
+          ))}
         </div>
 
         <span className="drawer-note">
@@ -283,6 +210,49 @@ function BagDrawer({ items, onClose, onRemove, onCheckout }) {
 
   const subtotal = items.reduce((total, item) => total + item.product.price, 0);
 
+
+
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    try {
+      setCheckoutLoading(true);
+
+      const checkoutItems = items.map((item) => {
+        const selectedVariant = item.product.variants?.find((variant) =>
+          variant.selectedOptions?.some(
+            (option) =>
+              option.name.toLowerCase() === "size" &&
+              option.value === item.size
+          )
+        );
+
+        if (!selectedVariant) {
+          throw new Error(
+            `Variant not found for ${item.product.name} - Size ${item.size}`
+          );
+        }
+
+        return {
+          variantId: selectedVariant.id,
+          quantity: 1,
+        };
+      });
+
+      const checkoutUrl = await createShopifyCheckout(checkoutItems);
+
+      window.location.href = checkoutUrl;
+
+    } catch (error) {
+      console.error("Checkout Error:", error);
+      alert(error.message || "Something went wrong");
+
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
+
+
   return (
     <div className="bag-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <aside className="bag-drawer" role="dialog" aria-modal="true" aria-label="Your bag">
@@ -298,12 +268,17 @@ function BagDrawer({ items, onClose, onRemove, onCheckout }) {
               {items.map(({ product, size, color }, index) => (
                 <div className="bag-item" key={`${product.id}-${size}-${index}`}>
                   <img src={product.image} alt="" />
-                  <div className="bag-item-info"><strong>{product.name}</strong><span>{color} · Size {size}</span><span>${product.price}.00</span></div>
+                  <div className="bag-item-info"><strong>{product.name}</strong><span>{color} · Size {size}</span><span>{product.price}.00 {product.currency}</span></div>
                   <button onClick={() => onRemove(index)} aria-label={`Remove ${product.name} from bag`}>Remove</button>
                 </div>
               ))}
             </div>
-            <div className="bag-summary"><div><span>Subtotal</span><strong>${subtotal}.00</strong></div><p>Shipping and taxes calculated at checkout.</p><button onClick={onCheckout}>Checkout — ${subtotal}.00</button><button className="continue-shopping" onClick={onClose}>Continue shopping</button></div>
+            <div className="bag-summary"><div><span>Subtotal</span><strong>${subtotal}.00</strong></div><p>Shipping and taxes calculated at checkout.</p><button
+              onClick={handleCheckout}
+              disabled={checkoutLoading || items.length === 0}
+            >
+              {checkoutLoading ? "Processing..." : `Checkout — $${subtotal}.00`}
+            </button><button className="continue-shopping" onClick={onClose}>Continue shopping</button></div>
           </>
         )}
       </aside>
@@ -316,8 +291,6 @@ function ProductCard({ product, onSelect }) {
     <button className="product-card" onClick={() => onSelect(product)} aria-label={`View ${product.name}`}>
       <span className="product-image-wrap">
         <img src={product.image} alt={product.name} loading="lazy" />
-        {/* {product.tag && <span className="product-tag">{product.tag}</span>} */}
-        {/* <span className="quick-view">View piece <ArrowIcon /></span> */}
       </span>
       <span className="product-meta">
         <span><span className="product-name">{product.name}</span><span className="product-color">{product.color}</span></span>
@@ -336,6 +309,25 @@ function ProductGrid({ items, onSelect }) {
 }
 
 function HomePage({ onCategory, onProduct }) {
+
+  const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const data = await getCollections();
+        setCollections(data);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCollections();
+  }, []);
+
+
   return (
     <main>
       <section className="hero" aria-label="MGZ. — vintage everyday wear">
@@ -369,7 +361,7 @@ function HomePage({ onCategory, onProduct }) {
 
         </div>
       </section>
-
+      {/* 
       <section className="category-section" aria-label="Shop our collections">
         <div className="category-grid">
           <button className="category-tile sweatshirt-tile" onClick={() => onCategory('Sweatshirts')}>
@@ -385,7 +377,55 @@ function HomePage({ onCategory, onProduct }) {
             <span className="category-copy"><span className="category-title">The Sweatpants</span><span className="category-link">Shop Now</span></span>
           </button>
         </div>
+      </section> */}
+
+
+
+      <section className="category-section" aria-label="Shop our collections">
+        <div className="category-grid">
+          {collections.map((collection) => {
+            const isSweatshirt = collection.handle.toLowerCase().includes('sweatshirt');
+
+            const hoverImage = isSweatshirt
+              ? 'sweatshirt2.png'
+              : 'sweatpants2.png';
+
+            return (
+              <button
+                key={collection.id}
+                className={`category-tile ${isSweatshirt ? 'sweatshirt-tile' : 'pants-tile'}`}
+                onClick={() => onCategory(collection.handle)}
+              >
+                <img
+                  src={collection.image}
+                  alt={collection.imageAlt || collection.title}
+                  loading="lazy"
+                />
+
+                <img
+                  className="category-hover-image"
+                  src={`${import.meta.env.BASE_URL}${hoverImage}`}
+                  alt=""
+                  loading="lazy"
+                />
+
+                <span className="category-overlay" />
+
+                <span className="category-copy">
+                  <span className="category-title">
+                    {collection.title}
+                  </span>
+
+                  <span className="category-link">Shop Now</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </section>
+
+
+
 
       <section className="manifesto" id="about">
         <img src={`${import.meta.env.BASE_URL}manifesto.png`} alt="Vintage clothing in warm afternoon light" loading="lazy" />
@@ -457,9 +497,9 @@ function AboutPage({ onHome, onShop }) {
   );
 }
 
-function CollectionPage({ category, onProduct, onHome }) {
+function CollectionPage({ products, category, onProduct, onHome }) {
   const [filter, setFilter] = useState('Featured');
-  const items = products.filter((product) => category === 'All' || product.category === category);
+  const items = products;
   const sorted = filter === 'Price: low to high' ? [...items].sort((a, b) => a.price - b.price) : items;
   return (
     <main className="collection-page">
@@ -475,12 +515,15 @@ function CollectionPage({ category, onProduct, onHome }) {
   );
 }
 
-function ProductPage({ product, onBack, onAdd, onProduct }) {
+function ProductPage({ product, products, onBack, onAdd, onProduct }) {
   const [size, setSize] = useState('');
   const [color, setColor] = useState(product.color);
   const [error, setError] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
-  const galleryImages = getProductGallery(product, color);
+  const galleryImages =
+    product.images?.length > 0
+      ? product.images
+      : [product.image];
   const relatedProducts = products
     .filter((item) => item.id !== product.id)
     .sort((first, second) => Number(second.category === product.category) - Number(first.category === product.category))
@@ -503,6 +546,19 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
     setError(false);
     onAdd(product, size, color);
   }
+  console.log(product);
+
+
+  const sizeOptions = [
+    ...new Set(
+      (product.variants || []).flatMap((variant) =>
+        variant.selectedOptions
+          .filter((option) => option.name.toLowerCase() === "size")
+          .map((option) => option.value)
+      )
+    ),
+  ];
+
   return (
     <main className="product-page">
       <button className="back-link product-back" onClick={onBack}>← Back to pieces</button>
@@ -513,15 +569,42 @@ function ProductPage({ product, onBack, onAdd, onProduct }) {
         <div className="detail-info">
           <span className="eyebrow">{product.category} / MGZ. ORIGINAL</span>
           <h1>{product.name}<span className="period">.</span></h1>
-          <span className="detail-price">${product.price}.00</span>
-          <p className="detail-description">Your new favourite, already broken in. A relaxed-fit essential with a soft, heavyweight feel — made for slow mornings and long way homes.</p>
+          <span className="detail-price">{product.price}.00 {product.currency} </span>
+          <p className="detail-description">{product.description}</p>
           {/* <div className="detail-color"><span>Choose a colour</span><span className="color-value">{color}</span></div> */}
           {/* <div className="color-options" aria-label="Available colors">{product.colors.map((option) => <button key={option.name} className={`color-swatch ${color === option.name ? 'selected' : ''}`} style={{ '--swatch-color': option.value }} onClick={() => setColor(option.name)} aria-label={option.name} aria-pressed={color === option.name} title={option.name} />)}</div> */}
           <div className="size-label"><span>Choose your size</span><button className="size-guide-trigger" onClick={() => setSizeGuideOpen(true)}>Size guide ↗</button></div>
-          <div className="size-options">{['M', 'L', 'XL', '2XL'].map((item) => <button key={item} className={size === item ? 'selected' : ''} onClick={() => { setSize(item); setError(false); }}>{item}</button>)}</div>
+          <div className="size-options">
+            {sizeOptions.map((item) => {
+              const available = product.variants.some(
+                (variant) =>
+                  variant.availableForSale &&
+                  variant.selectedOptions.some(
+                    (option) =>
+                      option.name.toLowerCase() === "size" &&
+                      option.value === item
+                  )
+              );
+
+              return (
+                <button
+                  key={item}
+                  disabled={!available}
+                  className={`${size === item ? "selected" : ""} ${!available ? "unavailable" : ""
+                    }`}
+                  onClick={() => {
+                    setSize(item);
+                    setError(false);
+                  }}
+                >
+                  {item}
+                </button>
+              );
+            })}
+          </div>
           {error && <p className="size-error">Pick your size first, please.</p>}
-          <button className="add-button" onClick={addToBag}>Add to bag — ${product.price}</button>
-          <p className="detail-note">Easy returns · Made for everyday · Free shipping over $120</p>
+          <button className="add-button" onClick={addToBag}>Add to bag — {product.price}   {product.currency}</button>
+          <p className="detail-note">Easy returns · Made for everyday · Free shipping over 1000 EGP</p>
           <div className="product-story"><span>THE LITTLE DETAILS</span><p>Designed for the days that turn into nights. A timeless shape, thoughtful details, zero overthinking.</p></div>
         </div>
       </div>
@@ -614,35 +697,44 @@ function CheckoutPage({ items, onBack, onComplete }) {
 
 
 
-function CollectionRoute({ onProduct, onHome }) {
+
+function CollectionRoute({ products, collections, onProduct, onHome }) {
   const { category } = useParams();
 
-  const categories = {
-    all: 'All',
-    sweatshirts: 'Sweatshirts',
-    sweatpants: 'Sweatpants',
-  };
+  const isAll = category?.toLowerCase() === "all";
 
-  const categoryName = categories[category?.toLowerCase()];
+  const collection = collections.find(
+    (item) => item.handle === category?.toLowerCase()
+  );
 
-  if (!categoryName) {
+  if (!isAll && !collection) {
     return <Navigate to="/shop/all" replace />;
   }
 
+  const collectionProducts = isAll
+    ? products
+    : products.filter((product) =>
+      collection.productIds.includes(product.id)
+    );
+
   return (
     <CollectionPage
-      category={categoryName}
+      products={collectionProducts}
+      category={isAll ? "All" : collection.title}
       onProduct={onProduct}
       onHome={onHome}
     />
   );
 }
 
-function ProductRoute({ onBack, onAdd, onProduct }) {
+
+
+
+function ProductRoute({ products, onBack, onAdd, onProduct }) {
   const { id } = useParams();
 
   const product = products.find(
-    (item) => item.id === Number(id)
+    (item) => item.handle === id
   );
 
   if (!product) {
@@ -653,6 +745,7 @@ function ProductRoute({ onBack, onAdd, onProduct }) {
     <ProductPage
       key={product.id}
       product={product}
+      products={products}
       onBack={() => onBack(product.category)}
       onAdd={onAdd}
       onProduct={onProduct}
@@ -665,7 +758,7 @@ function ProductRoute({ onBack, onAdd, onProduct }) {
 
 
 
-function SearchPanel({ onClose, onProduct }) {
+function SearchPanel({ products, onClose, onProduct }) {
   const [query, setQuery] = useState('');
   const matches = query.trim() ? products.filter((product) => `${product.name} ${product.category} ${product.color}`.toLowerCase().includes(query.toLowerCase())) : [];
   useEffect(() => {
@@ -703,6 +796,40 @@ function App() {
   const [bagOpen, setBagOpen] = useState(false);
   const [bag, setBag] = useState([]);
   const [notice, setNotice] = useState('');
+
+
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState(null);
+
+
+
+  const [collections, setCollections] = useState([]);
+
+  useEffect(() => {
+    async function loadStoreData() {
+      try {
+        const [productsData, collectionsData] = await Promise.all([
+          getProducts(),
+          getCollections(),
+        ]);
+
+        setProducts(productsData);
+        setCollections(collectionsData);
+
+        console.log("Shopify Products:", productsData);
+        console.log("Shopify Collections:", collectionsData);
+
+      } catch (error) {
+        console.error("Shopify Error:", error);
+        setProductsError(error.message);
+      } finally {
+        setProductsLoading(false);
+      }
+    }
+
+    loadStoreData();
+  }, []);
 
   // Scroll effect for the Home navbar
   useEffect(() => {
@@ -950,7 +1077,7 @@ function App() {
   }
 
   function showProduct(product) {
-    navigate(`/product/${product.id}`);
+    navigate(`/product/${product.handle}`);
     setSearchOpen(false);
     setMenuOpen(false);
   }
@@ -1023,6 +1150,8 @@ function App() {
           path="/shop/:category"
           element={
             <CollectionRoute
+              products={products}
+              collections={collections}
               onProduct={showProduct}
               onHome={goHome}
             />
@@ -1033,6 +1162,7 @@ function App() {
           path="/product/:id"
           element={
             <ProductRoute
+              products={products}
               onBack={(category) => showCategory(category)}
               onAdd={addToBag}
               onProduct={showProduct}
@@ -1103,6 +1233,7 @@ function App() {
           }}
           onBag={openBag}
           bagCount={bag.length}
+          collections={collections}
         />
       )}
 
@@ -1121,6 +1252,7 @@ function App() {
 
       {searchOpen && (
         <SearchPanel
+          products={products}
           onClose={() => setSearchOpen(false)}
           onProduct={showProduct}
         />
