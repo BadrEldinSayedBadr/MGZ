@@ -1,9 +1,13 @@
 
 const SHOPIFY_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN;
 const SHOPIFY_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-const API_VERSION = "2026-10";
+const API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || "2026-10";
 
 export async function shopifyFetch(query, variables = {}) {
+    if (!SHOPIFY_DOMAIN || !SHOPIFY_TOKEN) {
+        throw new Error("Shopify is not configured. Set the store domain and Storefront API token.");
+    }
+
     const response = await fetch(
         `https://${SHOPIFY_DOMAIN}/api/${API_VERSION}/graphql.json`,
         {

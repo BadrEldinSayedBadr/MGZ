@@ -38,6 +38,18 @@ npm run preview
 
 The static production output is written to `dist/`.
 
+## Shopify configuration
+
+Create a local `.env` file with the variables shown in `.env.example` to load products during development and local builds. The Shopify Storefront API domain and token must also be available at build time; GitHub Pages does not read your local `.env` file.
+
+In GitHub, open **Settings → Secrets and variables → Actions** and add:
+
+- Repository variable `VITE_SHOPIFY_STORE_DOMAIN` with the Shopify store domain.
+- Repository secret `VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN` with the Storefront API access token.
+- Optional repository variable `VITE_SHOPIFY_API_VERSION` to override the API version (defaults to `2026-10`).
+
+The deploy workflow checks that the required domain and token are configured and passes them to Vite while building. Vite embeds these values into the public static site, so the Storefront API token is visible to site visitors; use a Storefront API token with only the permissions needed by this storefront.
+
 ## Deploy to GitHub Pages
 
 The included GitHub Actions workflow builds and deploys the site when changes are pushed to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**.

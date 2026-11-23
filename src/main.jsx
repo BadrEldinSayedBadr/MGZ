@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom';
 
 import './styles.css';
-import "./testShopify";
 
 
 import { getProducts, getCollections, createShopifyCheckout } from "./services/shopify";
