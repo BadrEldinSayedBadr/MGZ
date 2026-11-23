@@ -307,7 +307,13 @@ function ProductGrid({ items, onSelect }) {
   );
 }
 
-function HomePage({ onCategory, onProduct }) {
+function HomePage({
+  products,
+  productsLoading,
+  productsError,
+  onCategory,
+  onProduct
+}) {
 
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -331,7 +337,6 @@ function HomePage({ onCategory, onProduct }) {
     <main>
       <section className="hero" aria-label="MGZ. — vintage everyday wear">
         {/* <img className="hero-image" src={`${import.meta.env.BASE_URL}home.jpg`} alt="Fashion model walking on a runway" fetchPriority="high" />   */}
-
         <div className="hero-shade" />
       </section>
 
@@ -384,40 +389,52 @@ function HomePage({ onCategory, onProduct }) {
         <div className="category-grid">
           {collections.map((collection) => {
             const isSweatshirt = collection.handle.toLowerCase().includes('sweatshirt');
-
+            const categoryProducts = products.filter((product) =>
+              collection.productIds.includes(product.id)
+            );
+            const categoryImage = isSweatshirt ? 'sweatshirt.png' : 'sweatpants.png';
             const hoverImage = isSweatshirt
               ? 'sweatshirt2.png'
               : 'sweatpants2.png';
 
             return (
-              <button
-                key={collection.id}
-                className={`category-tile ${isSweatshirt ? 'sweatshirt-tile' : 'pants-tile'}`}
-                onClick={() => onCategory(collection.handle)}
-              >
-                <img
-                  src={collection.image}
-                  alt={collection.imageAlt || collection.title}
-                  loading="lazy"
-                />
+              <article className="category-collection" key={collection.id}>
+                <button
+                  className={`category-tile ${isSweatshirt ? 'sweatshirt-tile' : 'pants-tile'}`}
+                  onClick={() => onCategory(collection.handle)}
+                >
+                  <img
+                    src={collection.image || `${import.meta.env.BASE_URL}${categoryImage}`}
+                    alt={collection.title}
+                    loading="lazy"
+                  />
 
-                <img
-                  className="category-hover-image"
-                  src={`${import.meta.env.BASE_URL}${hoverImage}`}
-                  alt=""
-                  loading="lazy"
-                />
+                  <img
+                    className="category-hover-image"
+                    src={`${import.meta.env.BASE_URL}${hoverImage}`}
+                    alt=""
+                    loading="lazy"
+                  />
 
-                <span className="category-overlay" />
+                  <span className="category-overlay" />
 
-                <span className="category-copy">
-                  <span className="category-title">
-                    {collection.title}
+                  <span className="category-copy">
+                    <span className="category-title">{collection.title}</span>
+                    <span className="category-link">Shop Now</span>
                   </span>
-
-                  <span className="category-link">Shop Now</span>
-                </span>
-              </button>
+                </button>
+                <div className="category-products">
+                  {productsLoading ? (
+                    <p className="category-products-status" role="status">Loading products…</p>
+                  ) : productsError ? (
+                    <p className="category-products-status" role="alert">Products could not be loaded.</p>
+                  ) : categoryProducts.length > 0 ? (
+                    <ProductGrid items={categoryProducts} onSelect={onProduct} />
+                  ) : (
+                    <p className="category-products-status">No products in this collection yet.</p>
+                  )}
+                </div>
+              </article>
             );
           })}
         </div>
@@ -1139,6 +1156,9 @@ function App() {
           path="/"
           element={
             <HomePage
+              products={products}
+              productsLoading={productsLoading}
+              productsError={productsError}
               onCategory={showCategory}
               onProduct={showProduct}
             />
