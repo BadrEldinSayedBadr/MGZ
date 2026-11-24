@@ -423,17 +423,7 @@ function HomePage({
                     <span className="category-link">Shop Now</span>
                   </span>
                 </button>
-                <div className="category-products">
-                  {productsLoading ? (
-                    <p className="category-products-status" role="status">Loading products…</p>
-                  ) : productsError ? (
-                    <p className="category-products-status" role="alert">Products could not be loaded.</p>
-                  ) : categoryProducts.length > 0 ? (
-                    <ProductGrid items={categoryProducts} onSelect={onProduct} />
-                  ) : (
-                    <p className="category-products-status">No products in this collection yet.</p>
-                  )}
-                </div>
+   
               </article>
             );
           })}
