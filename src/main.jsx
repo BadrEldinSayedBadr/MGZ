@@ -293,7 +293,7 @@ function ProductCard({ product, onSelect }) {
       </span>
       <span className="product-meta">
         <span><span className="product-name">{product.name}</span><span className="product-color">{product.color}</span></span>
-        <span className="product-price">${product.price}</span>
+        <span className="product-price">{product.price}</span>
       </span>
     </button>
   );
