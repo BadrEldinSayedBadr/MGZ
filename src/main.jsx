@@ -272,11 +272,11 @@ function BagDrawer({ items, onClose, onRemove, onCheckout }) {
                 </div>
               ))}
             </div>
-            <div className="bag-summary"><div><span>Subtotal</span><strong>${subtotal}.00</strong></div><p>Shipping and taxes calculated at checkout.</p><button
+            <div className="bag-summary"><div><span>Subtotal</span><strong>{subtotal}.00 EGP</strong></div><p>Shipping and taxes calculated at checkout.</p><button
               onClick={handleCheckout}
               disabled={checkoutLoading || items.length === 0}
             >
-              {checkoutLoading ? "Processing..." : `Checkout — $${subtotal}.00`}
+              {checkoutLoading ? "Processing..." : `Checkout — ${subtotal}.00 EGP`}
             </button><button className="continue-shopping" onClick={onClose}>Continue shopping</button></div>
           </>
         )}
