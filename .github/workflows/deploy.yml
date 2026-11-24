@@ -29,8 +29,9 @@ jobs:
         run: npm ci
       - name: Verify Shopify configuration
         env:
-          VITE_SHOPIFY_STORE_DOMAIN: ${{ vars.VITE_SHOPIFY_STORE_DOMAIN }}
+          VITE_SHOPIFY_STORE_DOMAIN: ${{ secrets.VITE_SHOPIFY_STORE_DOMAIN }}
           VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
+          VITE_SHOPIFY_API_VERSION: ${{ secrets.VITE_SHOPIFY_API_VERSION }}
         run: |
           missing=0
           if [ -z "$VITE_SHOPIFY_STORE_DOMAIN" ]; then
@@ -48,9 +49,9 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: 'true'
-          VITE_SHOPIFY_STORE_DOMAIN: ${{ vars.VITE_SHOPIFY_STORE_DOMAIN }}
+          VITE_SHOPIFY_STORE_DOMAIN: ${{ secrets.VITE_SHOPIFY_STORE_DOMAIN }}
           VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
-          VITE_SHOPIFY_API_VERSION: ${{ vars.VITE_SHOPIFY_API_VERSION }}
+          VITE_SHOPIFY_API_VERSION: ${{ secrets.VITE_SHOPIFY_API_VERSION }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
